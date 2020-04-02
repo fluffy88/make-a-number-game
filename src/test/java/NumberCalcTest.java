@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 public class NumberCalcTest {
@@ -89,7 +90,7 @@ public class NumberCalcTest {
 
         String actual = calc.calc(BigInteger.valueOf(151), BigInteger.valueOf(2), BigInteger.valueOf(9), BigInteger.valueOf(16), BigInteger.valueOf(30));
 
-        assertEquals("30/2*9+16", actual);
+        assertEquals("9*30/2+16", actual);
     }
 
     @Test
@@ -102,6 +103,7 @@ public class NumberCalcTest {
     }
 
     @Test
+    @Tag("ThisOne")
     public void twoNumberGenerateTest() {
         NumberCalc calc = new NumberCalc();
 
@@ -119,6 +121,7 @@ public class NumberCalcTest {
     }
 
     @Test
+    @Tag("ThisOne")
     public void fourNumberGenerateDivideMultiplyAddTest() {
         NumberCalc calc = new NumberCalc();
 
@@ -129,6 +132,7 @@ public class NumberCalcTest {
     }
 
     @Test
+    @Tag("ThisOne")
     public void fourNumberGenerateDivideMultiplyMultiplyTest() {
         NumberCalc calc = new NumberCalc();
 
@@ -139,45 +143,78 @@ public class NumberCalcTest {
     }
 
     @Test
+    @Tag("ThisOne")
     public void threeNumberGenerateTest() {
         NumberCalc calc = new NumberCalc();
 
         List<List<String>> actual = calc.generateAllSolutions(BigInteger.valueOf(5), BigInteger.valueOf(6), BigInteger.valueOf(8));
 
-//        assertEquals(48, actual.size());
-        System.out.println(actual);
+        assertEquals(96, actual.size());
         assertTrue(actual.contains(Arrays.asList("5+6+8".split(""))));
+        assertTrue(actual.contains(Arrays.asList("5+8+6".split(""))));
         assertTrue(actual.contains(Arrays.asList("5+6-8".split(""))));
         assertTrue(actual.contains(Arrays.asList("5+6*8".split(""))));
         assertTrue(actual.contains(Arrays.asList("5+6/8".split(""))));
-        assertTrue(actual.contains(Arrays.asList("5+8+6".split(""))));
         assertTrue(actual.contains(Arrays.asList("5+8-6".split(""))));
         assertTrue(actual.contains(Arrays.asList("5+8*6".split(""))));
         assertTrue(actual.contains(Arrays.asList("5+8/6".split(""))));
-//        assertEquals("5*6*8", actual.get(0).stream().reduce(String::concat).orElse(""));
-//        assertEquals("5*6+8", actual.get(1).stream().reduce(String::concat).orElse(""));
-////        assertEquals("5*8*6", actual.get(0).stream().reduce(String::concat).orElse(""));
-////        assertEquals("5*8+6", actual.get(1).stream().reduce(String::concat).orElse(""));
-//        assertEquals("6*5*8", actual.get(2).stream().reduce(String::concat).orElse(""));
-//        assertEquals("6*5+8", actual.get(3).stream().reduce(String::concat).orElse(""));
-////        assertEquals("6*8*5", actual.get(2).stream().reduce(String::concat).orElse(""));
-////        assertEquals("6*8+5", actual.get(3).stream().reduce(String::concat).orElse(""));
-//        assertEquals("8*5*6", actual.get(4).stream().reduce(String::concat).orElse(""));
-//        assertEquals("8*5+6", actual.get(5).stream().reduce(String::concat).orElse(""));
-////        assertEquals("8*6*5", actual.get(4).stream().reduce(String::concat).orElse(""));
-////        assertEquals("8*6+5", actual.get(5).stream().reduce(String::concat).orElse(""));
-//        assertEquals("5+6*8", actual.get(6).stream().reduce(String::concat).orElse(""));
-//        assertEquals("5+6+8", actual.get(7).stream().reduce(String::concat).orElse(""));
-////        assertEquals("5+8*6", actual.get(6).stream().reduce(String::concat).orElse(""));
-////        assertEquals("5+8+6", actual.get(7).stream().reduce(String::concat).orElse(""));
-//        assertEquals("6+5*8", actual.get(8).stream().reduce(String::concat).orElse(""));
-//        assertEquals("6+5+8", actual.get(9).stream().reduce(String::concat).orElse(""));
-////        assertEquals("6+8*5", actual.get(8).stream().reduce(String::concat).orElse(""));
-////        assertEquals("6+8+5", actual.get(9).stream().reduce(String::concat).orElse(""));
-//        assertEquals("8+5*6", actual.get(10).stream().reduce(String::concat).orElse(""));
-//        assertEquals("8+5+6", actual.get(11).stream().reduce(String::concat).orElse(""));
-////        assertEquals("8+6*5", actual.get(10).stream().reduce(String::concat).orElse(""));
-////        assertEquals("8+6*5", actual.get(11).stream().reduce(String::concat).orElse(""));
+        assertTrue(actual.contains(Arrays.asList("8*5*6".split(""))));
+        assertTrue(actual.contains(Arrays.asList("8*5+6".split(""))));
+        assertTrue(actual.contains(Arrays.asList("8*6*5".split(""))));
+        assertTrue(actual.contains(Arrays.asList("8*6+5".split(""))));
+        assertTrue(actual.contains(Arrays.asList("8+5*6".split(""))));
+        assertTrue(actual.contains(Arrays.asList("8+5+6".split(""))));
+        assertTrue(actual.contains(Arrays.asList("8+6*5".split(""))));
+        assertTrue(actual.contains(Arrays.asList("8+6*5".split(""))));
+    }
+
+    @Test
+    public void threeNumberRecursiveGenerateTest() {
+        NumberCalc calc = new NumberCalc();
+
+        List<List<String>> actual = calc.recursiveGenerateAllNumberPermutations(BigInteger.valueOf(1), BigInteger.valueOf(2), BigInteger.valueOf(3));
+
+        assertEquals(6, actual.size());
+        assertTrue(actual.contains(Arrays.asList("123".split(""))));
+        assertTrue(actual.contains(Arrays.asList("132".split(""))));
+        assertTrue(actual.contains(Arrays.asList("213".split(""))));
+        assertTrue(actual.contains(Arrays.asList("231".split(""))));
+        assertTrue(actual.contains(Arrays.asList("312".split(""))));
+        assertTrue(actual.contains(Arrays.asList("321".split(""))));
+    }
+
+    @Test
+    public void threeNumberRecursiveSymbolGenerateTest() {
+        NumberCalc calc = new NumberCalc();
+
+        List<List<String>> actual = calc.generateAllSymbolPermutations(Arrays.asList("1", "2", "3"));
+
+        assertEquals(16, actual.size());
+        assertTrue(actual.contains(Arrays.asList("++".split(""))));
+        assertTrue(actual.contains(Arrays.asList("+-".split(""))));
+        assertTrue(actual.contains(Arrays.asList("+*".split(""))));
+        assertTrue(actual.contains(Arrays.asList("+/".split(""))));
+        assertTrue(actual.contains(Arrays.asList("-+".split(""))));
+        assertTrue(actual.contains(Arrays.asList("--".split(""))));
+        assertTrue(actual.contains(Arrays.asList("-*".split(""))));
+        assertTrue(actual.contains(Arrays.asList("-/".split(""))));
+        assertTrue(actual.contains(Arrays.asList("*+".split(""))));
+        assertTrue(actual.contains(Arrays.asList("*-".split(""))));
+        assertTrue(actual.contains(Arrays.asList("**".split(""))));
+        assertTrue(actual.contains(Arrays.asList("*/".split(""))));
+        assertTrue(actual.contains(Arrays.asList("/+".split(""))));
+        assertTrue(actual.contains(Arrays.asList("/-".split(""))));
+        assertTrue(actual.contains(Arrays.asList("/*".split(""))));
+        assertTrue(actual.contains(Arrays.asList("//".split(""))));
+    }
+
+    @Test
+    public void fourNumberRecursiveSymbolGenerateTest() {
+        NumberCalc calc = new NumberCalc();
+
+        List<List<String>> actual = calc.generateAllSymbolPermutations(Arrays.asList("1", "2", "3", "4"));
+
+        assertEquals(64, actual.size());
     }
 
     @Test
