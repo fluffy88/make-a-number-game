@@ -99,7 +99,7 @@ public class NumberCalcTest {
 
         String actual = calc.calc(BigInteger.valueOf(813), BigInteger.valueOf(1), BigInteger.valueOf(10), BigInteger.valueOf(25), BigInteger.valueOf(50), BigInteger.valueOf(75), BigInteger.valueOf(100));
 
-        assertEquals("1 10 25 50 75 100", actual);
+        assertEquals("1+10*75+50+100/25", actual);
     }
 
     @Test
@@ -221,7 +221,7 @@ public class NumberCalcTest {
     public void twoNumberComputeMultiplyTest() {
         NumberCalc calc = new NumberCalc();
 
-        List<String> actual = calc.compute(new ArrayList<>(Arrays.asList("4", "*", "6")), "*");
+        List<String> actual = calc.computeForSymbols(new ArrayList<>(Arrays.asList("4", "*", "6")), "*");
 
         assertEquals(Collections.singletonList("24"), actual);
     }
@@ -230,7 +230,7 @@ public class NumberCalcTest {
     public void threeNumberComputeSubtractAddTest() {
         NumberCalc calc = new NumberCalc();
 
-        List<String> actual = calc.compute(new ArrayList<>(Arrays.asList("15", "-", "3", "+", "5")), "+", "-");
+        List<String> actual = calc.computeForSymbols(new ArrayList<>(Arrays.asList("15", "-", "3", "+", "5")), "+", "-");
 
         assertEquals(Collections.singletonList("17"), actual);
     }
@@ -239,7 +239,7 @@ public class NumberCalcTest {
     public void threeNumberComputeMultiplyTest() {
         NumberCalc calc = new NumberCalc();
 
-        List<String> actual = calc.compute(new ArrayList<>(Arrays.asList("2", "*", "4", "*", "6")), "*");
+        List<String> actual = calc.computeForSymbols(new ArrayList<>(Arrays.asList("2", "*", "4", "*", "6")), "*");
 
         assertEquals(Collections.singletonList("48"), actual);
     }
@@ -248,7 +248,7 @@ public class NumberCalcTest {
     public void fourNumberComputeMultiplyTest() {
         NumberCalc calc = new NumberCalc();
 
-        List<String> actual = calc.compute(new ArrayList<>(Arrays.asList("3", "*", "2", "*", "10", "*", "5")), "*");
+        List<String> actual = calc.computeForSymbols(new ArrayList<>(Arrays.asList("3", "*", "2", "*", "10", "*", "5")), "*");
 
         assertEquals(Collections.singletonList("300"), actual);
     }
@@ -257,7 +257,7 @@ public class NumberCalcTest {
     public void fourNumberComputeMultiplyWithAddTest() {
         NumberCalc calc = new NumberCalc();
 
-        List<String> actual = calc.compute(new ArrayList<>(Arrays.asList("3", "*", "2", "+", "10", "*", "5")), "*");
+        List<String> actual = calc.computeForSymbols(new ArrayList<>(Arrays.asList("3", "*", "2", "+", "10", "*", "5")), "*");
 
         assertEquals(Arrays.asList("6", "+", "50"), actual);
     }
@@ -266,7 +266,7 @@ public class NumberCalcTest {
     public void fourNumberComputeAddWithMultiplyTest() {
         NumberCalc calc = new NumberCalc();
 
-        List<String> actual = calc.compute(new ArrayList<>(Arrays.asList("3", "*", "2", "+", "10", "*", "5")), "+");
+        List<String> actual = calc.computeForSymbols(new ArrayList<>(Arrays.asList("3", "*", "2", "+", "10", "*", "5")), "+");
 
         assertEquals(Arrays.asList("3", "*", "12", "*", "5"), actual);
     }

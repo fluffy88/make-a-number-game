@@ -21,24 +21,30 @@ public class NumberCalc {
 
     private String findMatchingResult(BigInteger result, List<List<String>> possibilities) {
         return possibilities.stream()
-                .filter(characters -> {
-                    List<String> replaced = compute(characters, "*", "/");
-                    replaced = compute(replaced, "+", "-");
-                    return replaced.stream()
-                            .reduce(String::concat)
-                            .map(Long::parseLong)
-                            .map(BigInteger::valueOf)
-                            .orElse(BigInteger.ZERO)
-                            .equals(result);
+                .map(characters -> new AbstractMap.SimpleEntry<>(characters, computeSum(characters)))
+                .reduce((e1, e2) -> {
+                    BigInteger v1 = result.subtract(e1.getValue()).abs();
+                    BigInteger v2 = result.subtract(e2.getValue()).abs();
+                    return v1.compareTo(v2) > 0 ? e2 : e1;
                 })
-                .findFirst()
+                .map(AbstractMap.SimpleEntry::getKey)
                 .orElse(Collections.emptyList())
                 .stream()
                 .reduce(String::concat)
                 .orElse("");
     }
 
-    List<String> compute(List<String> input, String... symbols) {
+    private BigInteger computeSum(List<String> characters) {
+        List<String> replaced = computeForSymbols(characters, "*", "/");
+        replaced = computeForSymbols(replaced, "+", "-");
+        return replaced.stream()
+                .reduce(String::concat)
+                .map(Long::parseLong)
+                .map(BigInteger::valueOf)
+                .orElse(BigInteger.ZERO);
+    }
+
+    List<String> computeForSymbols(List<String> input, String... symbols) {
         List<String> characters = new ArrayList<>(input);
         for (int i = 0; i < characters.size(); i++) {
             if (Arrays.asList(symbols).contains(characters.get(i))) {
